@@ -1,11 +1,12 @@
+using System;
+using System.Linq.Expressions;
 using Core.Entities;
-using Core.Specifications;
 
-namespace Core.Specification
+namespace Core.Specifications
 {
-    public class ProductWithTypeAndBrandsSpecifications : BaseSpecification<Product>
+    public class ProductsWithTypesAndBrandsSpecification : BaseSpecification<Product>
     {
-       public ProductWithTypeAndBrandsSpecifications(ProductSpecParams productParams) 
+        public ProductsWithTypesAndBrandsSpecification(ProductSpecParams productParams) 
             : base(x => 
                 (string.IsNullOrEmpty(productParams.Search) || x.Name.ToLower().Contains(productParams.Search)) &&
                 (!productParams.BrandId.HasValue || x.ProductBrandId == productParams.BrandId) &&
@@ -34,11 +35,11 @@ namespace Core.Specification
             }
         }
 
-        public ProductWithTypeAndBrandsSpecifications(int id):base(x=>x.Id == id)
+        public ProductsWithTypesAndBrandsSpecification(int id) 
+            : base(x => x.Id == id)
         {
-            AddInclude (x=>x.ProductType);
-            AddInclude (x=>x.ProductBrand);
-
+            AddInclude(x => x.ProductType);
+            AddInclude(x => x.ProductBrand);
         }
     }
 }
